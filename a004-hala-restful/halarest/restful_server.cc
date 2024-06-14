@@ -21,6 +21,7 @@
 
 #include <melon/rpc/restful_service.h>
 #include <melon/rpc/server.h>
+#include "version.h"
 
 DEFINE_int32(port, 8018, "TCP Port of this server");
 DEFINE_int32(idle_timeout_s, -1, "Connection will be closed if there is no "
@@ -38,10 +39,16 @@ private:
         auto path = request->unresolved_path();
         response->set_status_code(200);
         response->set_header("Content-Type", "text/plain");
-        response->set_body("Hello, my restful\n");
-        response->append_body("Request path: ");
-        response->append_body(path);
-        response->append_body("\n");
+        if(path == "version") {
+            response->set_body(HALAREST_VERSION_STRING);
+            response->append_body("\n");
+            return;
+        } else {
+            response->set_body("Hello, my restful\n");
+            response->append_body("Request path: ");
+            response->append_body(path);
+            response->append_body("\n");
+        }
     }
 };
 }  // namespace myservice
