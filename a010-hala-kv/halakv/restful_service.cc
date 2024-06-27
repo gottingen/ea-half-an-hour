@@ -109,7 +109,7 @@ namespace halakv {
         }
         // get key from cache
         kv_request.set_key(*key);
-        LOG(INFO) << "get key: " << *key;
+        VLOG(20) << "get key: " << *key;
         auto rs = KvProxy::instance()->get(&kv_request, &kv_response);
         if (!rs.ok()) {
             response->set_status_code(500);
@@ -119,7 +119,7 @@ namespace halakv {
         std::string json;
         std::string err;
         if (json2pb::ProtoMessageToJson(kv_response, &json, &err)) {
-            LOG(INFO) << "get key: " << *key << "response: " << json;
+            VLOG(30) << "get key: " << *key << "response: " << json;
             response->set_body(json);
         } else {
             LOG(ERROR)<< "error: " << err;

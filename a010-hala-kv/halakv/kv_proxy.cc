@@ -55,7 +55,7 @@ namespace halakv {
     turbo::Status KvProxy::set(const ::halakv::KvRequest *request,
                       ::halakv::KvResponse *response) {
         auto index = get_peer_index(request->key());
-        LOG(INFO) << "set key: " << request->key()<< " server: "<< _peers[index];
+        VLOG(20) << "set key: " << request->key()<< " server: "<< _peers[index];
         if (index == _peer_index) {
             _cache->put(request, response);
             return turbo::OkStatus();
@@ -75,7 +75,7 @@ namespace halakv {
     turbo::Status KvProxy::get(const ::halakv::KvRequest *request,
                       ::halakv::KvResponse *response) {
         auto index = get_peer_index(request->key());
-        LOG(INFO) << "get key: " << request->key()<< " server: "<< _peers[index];
+        VLOG(20) << "get key: " << request->key()<< " server: "<< _peers[index];
         if (index == _peer_index) {
             _cache->get(request, response);
             return turbo::OkStatus();
@@ -95,7 +95,7 @@ namespace halakv {
     turbo::Status KvProxy::remove(const ::halakv::KvRequest *request,
                          ::halakv::KvResponse *response) {
         auto index = get_peer_index(request->key());
-        LOG(INFO) << "remove key: " << request->key()<< " server: "<< _peers[index];
+        VLOG(20) << "remove key: " << request->key()<< " server: "<< _peers[index];
         if (index == _peer_index) {
             _cache->remove(request, response);
             return turbo::OkStatus();
